@@ -8,6 +8,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import checkPropTypes from 'check-prop-types';
 import { createStore, combineReducers } from 'redux';
 import middleware from './middlewares/middleware.js';
+import { runSaga } from 'redux-saga';
 
 configure({ adapter: new Adapter(), disableLifecycleMethods: true });
 
@@ -19,3 +20,18 @@ export const checkProps = (component, expectedProps) =>
 
 export const testRootReducer = (initialState) => combineReducers(initialState);
 export const testStore = (reducer) => createStore(reducer, middleware);
+
+//saga test creator
+export async function recordSaga(saga, initialAction) {
+	const dispatched = [];
+
+	await runSaga(
+		{
+			dispatch: (action) => dispatched.push(action),
+		},
+		saga,
+		initialAction
+	).done;
+
+	return dispatched;
+}

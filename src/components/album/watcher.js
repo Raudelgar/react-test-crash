@@ -15,12 +15,12 @@ import {
 } from './actions';
 import { photoApi } from '../../api/fetchApi';
 
-function* fetchPhotos() {
+export function* fetchPhotos() {
 	const data = yield call(photoApi);
 	const action = yield put(loadPhotoSuccessAction(data));
-	console.log(action);
+	// console.log('success fetchPhoto');
 }
-function* handleSearchFromInput({ payload }) {
+export function* searchFromInput({ payload }) {
 	// yield delay(1000); //If I want to handle the debounce effect here
 	if (payload) console.log(Date.now(), payload);
 }
@@ -34,5 +34,5 @@ export function* albumWatcher() {
 	// }
 	yield takeLeading(LOAD_PHOTOS, fetchPhotos);
 	// yield throttle(2000, TEXT_INPUT_CHANGE, handleSearchFromInput);
-	yield takeLatest(TEXT_INPUT_CHANGE, handleSearchFromInput);
+	yield takeLatest(TEXT_INPUT_CHANGE, searchFromInput);
 }

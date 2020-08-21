@@ -24,7 +24,9 @@ export default function Album() {
 	return (
 		<div>
 			<input type='text' value={text} onChange={handleInputText} />
-			<button onClick={handlePhotoRequest}>Load Photo</button>
+			<button data-testid='load-image' onClick={handlePhotoRequest}>
+				Load Photo
+			</button>
 		</div>
 	);
 }
